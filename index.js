@@ -10,9 +10,6 @@ const pool = new Pool({connectionString :process.env.ELEPHANT_SQL_CONNECTION_STR
 app.use(express.json());
 //app.use(cors());
 
-app.get('/',(req,res)=>{
-    res.send('Hello world')
-})
 
 app.get('/api/movies/',(req,res)=>{
 pool
