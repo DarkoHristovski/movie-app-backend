@@ -113,6 +113,7 @@ app.get("/api/comments/", (req, res) => {
 });
 //get all the comments of one movie
 app.get("/api/movies/:id/comments", (req, res) => {
+  const id = req.params.id;
   pool
     .query("SELECT * FROM comments WHERE movieId=$1;", [id])
     .then((data) => {
