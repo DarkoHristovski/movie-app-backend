@@ -138,6 +138,16 @@ app.post("/api/movies/:id/comments", (req, res) => {
     .catch((e) => res.status(500).json({ message: e.message }));
 });
 
+app.delete("/api/movies/:id/comments", (req, res) => {
+  const id = req.params.id;
+  pool
+    .query("DELETE FROM comments WHERE id=$1 RETURNING*;", [id])
+    .then((data) => {
+      res.json(data.rows[0]);
+    })
+    .catch((e) => res.status(500).json({ message: e.message }));
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running at port: ${PORT}`);
 });
