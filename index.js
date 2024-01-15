@@ -111,23 +111,25 @@ app.get("/api/comments/", (req, res) => {
     })
     .catch((e) => res.status(500).json({ message: e.message }));
 });
+
 //get all the comments of one movie
 app.get("/api/movies/:id/comments", (req, res) => {
   const id = req.params.id;
   pool
     .query("SELECT * FROM comments WHERE movieId=$1;", [id])
     .then((data) => {
-      res.json(data.rows[0]);
+      res.json(data.rows);
     })
     .catch((e) => res.status(500).json({ message: e.message }));
 });
-//post a comment to movie with id x
+
+// post a comment to movie with id x
 app.post("/api/movies/:id/comments", (req, res) => {
   const id = req.params.id;
   const { commenttext, username } = req.body;
   pool
     .query(
-      "INSERT * INTO comments (movieID, commenttext, username) VALUE ($1,$2,$3) RETURNING*;",
+      "INSERT INTO comments (movieID, commenttext, username) VALUES ($1, $2, $3) RETURNING *;",
       [id, commenttext, username]
     )
     .then((data) => {
