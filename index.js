@@ -138,7 +138,7 @@ app.post("/api/movies/:id/comments", (req, res) => {
     .catch((e) => res.status(500).json({ message: e.message }));
 });
 
-app.delete("/api/movies/:id/comments", (req, res) => {
+app.delete("/api/comments/:id/", (req, res) => {
   const id = req.params.id;
   pool
     .query("DELETE FROM comments WHERE id=$1 RETURNING*;", [id])
